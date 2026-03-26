@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>NursePrep Pro | Add Questions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f7fb;
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            background: #0a0c10;
+        }
+
+        /* Glass Header */
+        .glass-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            padding: 16px 20px;
+        }
+
+        body.dark .glass-header {
+            background: rgba(10, 12, 16, 0.95);
+            border-bottom-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.3);
+        }
+
+        .logo-icon i {
+            font-size: 22px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f172a, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.dark .logo-text h1 {
+            background: linear-gradient(135deg, #e2e8f0, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 30px;
+            background: #f1f5f9;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+        }
+
+        body.dark .icon-btn {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Tab Bar */
+        .tab-bar {
+            max-width: 600px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+        }
+
+        .tab-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 60px;
+            padding: 6px;
+            display: flex;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        body.dark .tab-container {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(71, 85, 105, 0.5);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: #0891b2;
+            color: white;
+            box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Search */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 52px;
+            border: 2px solid #e2e8f0;
+            border-radius: 28px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: white;
+        }
+
+        body.dark .search-input {
+            background: #1e293b;
+            border-color: #334155;
+            color: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0891b2;
+        }
+
+        /* Cards */
+        .paper-card {
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        body.dark .paper-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        .paper-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .paper-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .paper-year {
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0891b2;
+        }
+
+        body.dark .paper-year {
+            background: #334155;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        body.dark .question-card {
+            background: #0f172a;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .reveal-btn {
+            background: transparent;
+            border: 2px solid #0891b2;
+            padding: 12px 20px;
+            border-radius: 40px;
+            color: #0891b2;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .answer-content {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 12px;
+            display: none;
+            border-left: 4px solid #0891b2;
+        }
+
+        body.dark .answer-content {
+            background: #1e293b;
+        }
+
+        .answer-content.show {
+            display: block;
+        }
+
+        .progress-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .progress-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .progress-btn.attempted { background: #fef3c7; color: #d97706; }
+        .progress-btn.reviewed { background: #dcfce7; color: #16a34a; }
+        .progress-btn.mastered { background: #dbeafe; color: #2563eb; }
+        body.dark .progress-btn.attempted { background: #451a03; color: #fbbf24; }
+        body.dark .progress-btn.reviewed { background: #14532d; color: #4ade80; }
+        body.dark .progress-btn.mastered { background: #1e3a8a; color: #60a5fa; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        body.dark .stat-card {
+            background: #1e293b;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0891b2;
+        }
+
+        /* Add Question Form */
+        .add-form {
+            background: white;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        body.dark .add-form {
+            background: #1e293b;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        body.dark .form-group input,
+        body.dark .form-group textarea,
+        body.dark .form-group select {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .success-msg {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        body.dark .success-msg {
+            background: #14532d;
+        }
+
+        /* FAB */
+        .fab-add {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #0891b2, #06b6d4);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(8, 145, 178, 0.4);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .fab-add:active {
+            transform: scale(0.92);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 48px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 28px;
+        }
+
+        body.dark .modal-content {
+            background: #1e293b;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #0891b2;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fas fa-stethoscope"></i></div>
+                <div class="logo-text">
+                    <h1>NursePrep Pro</h1>
+                    <p>Add & Share Questions</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+                <button class="icon-btn" onclick="shareApp()"><i class="fas fa-share-alt"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="practice"><i class="fas fa-book-open"></i> Practice</button>
+            <button class="tab-btn" data-tab="add"><i class="fas fa-plus-circle"></i> Add</button>
+            <button class="tab-btn" data-tab="progress"><i class="fas fa-chart-line"></i> Progress</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Practice Tab -->
+        <div id="practiceTab" class="tab-pane active">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search questions...">
+            </div>
+            <div id="papersList"><div class="loading-spinner"><div class="spinner"></div><p>Loading questions...</p></div></div>
+        </div>
+
+        <!-- Add Question Tab -->
+        <div id="addTab" class="tab-pane">
+            <div class="add-form">
+                <h3 style="margin-bottom: 20px;"><i class="fas fa-plus-circle"></i> Add New Question</h3>
+                <div id="addSuccessMsg" class="success-msg"><i class="fas fa-check-circle"></i> Question added! It will appear for all users in 1-2 minutes.</div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-book"></i> Paper Title</label>
+                    <input type="text" id="newTitle" placeholder="e.g., Fundamentals of Nursing">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> Year</label>
+                    <input type="text" id="newYear" placeholder="e.g., 2023">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-question-circle"></i> Question</label>
+                    <textarea id="newQuestion" rows="3" placeholder="Type your question here..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-lightbulb"></i> Answer</label>
+                    <textarea id="newAnswer" rows="4" placeholder="Type the correct answer here..."></textarea>
+                </div>
+                
+                <button class="submit-btn" onclick="submitQuestion()">
+                    <i class="fas fa-cloud-upload-alt"></i> Submit Question
+                </button>
+                
+                <p style="font-size: 12px; color: #64748b; text-align: center; margin-top: 16px;">
+                    <i class="fas fa-globe"></i> Questions are saved to Google Sheet and visible to all users
+                </p>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div id="progressTab" class="tab-pane">
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card"><div class="stat-value" id="totalQuestions">0</div><div>Total</div></div>
+                <div class="stat-card"><div class="stat-value" id="attemptedCount">0</div><div>Attempted</div></div>
+                <div class="stat-card"><div class="stat-value" id="masteredCount">0</div><div>Mastered</div></div>
+            </div>
+            <div id="progressList"></div>
+        </div>
+    </div>
+
+    <button class="fab-add" onclick="scrollToAddTab()">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <script>
+        // CONFIGURATION
+        const SHEET_ID = "1She5pa77A5kRnqn6_zHiStN5BYjd5ma2KNZB_oyPmx8";
+        const SHEET_NAME = "Sheet1";
+        
+        // App State
+        let papersData = [];
+        let progress = JSON.parse(localStorage.getItem('nursePrepProgress')) || {};
+        
+        // Load questions from Google Sheet
+        async function loadQuestions() {
+            const container = document.getElementById('papersList');
+            container.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Loading questions...</p></div>';
+            
+            try {
+                // Using Google Sheets CSV export
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+                const response = await fetch(csvUrl);
+                const csvText = await response.text();
+                
+                const papers = parseCSV(csvText);
+                
+                if (papers.length > 0) {
+                    papersData = papers;
+                    localStorage.setItem('nursePrepCache', JSON.stringify(papersData));
+                    renderPapers();
+                    updateStats();
+                    renderProgressList();
+                } else {
+                    container.innerHTML = '<div class="paper-card">No questions yet. Tap the + button to add your first question!</div>';
+                }
+            } catch (error) {
+                console.error('Error loading:', error);
+                // Try cache
+                const cached = localStorage.getItem('nursePrepCache');
+                if (cached) {
+                    papersData = JSON.parse(cached);
+                    renderPapers();
+                    updateStats();
+                    renderProgressList();
+                } else {
+                    container.innerHTML = '<div class="paper-card">⚠️ Could not load questions. Make sure your Google Sheet is published to web.</div>';
+                }
+            }
+        }
+        
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(l => l.trim());
+            if (lines.length < 2) return [];
+            
+            const papersMap = new Map();
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.replace(/["']/g, '').trim());
+                const id = parseInt(values[0]) || i;
+                const title = values[1] || 'Unknown';
+                const year = values[2] || 'Unknown';
+                const question = values[3];
+                const answer = values[4];
+                
+                if (!question) continue;
+                
+                if (!papersMap.has(id)) {
+                    papersMap.set(id, { id, title, year, questions: [] });
+                }
+                papersMap.get(id).questions.push({ text: question, answer: answer || 'Answer not provided' });
+            }
+            
+            return Array.from(papersMap.values());
+        }
+        
+        function renderPapers() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const container = document.getElementById('papersList');
+            
+            let filtered = papersData;
+            if (searchTerm) {
+                filtered = papersData.filter(p => 
+                    p.title.toLowerCase().includes(searchTerm) ||
+                    p.year.includes(searchTerm) ||
+                    p.questions.some(q => q.text.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="paper-card">No matching questions found.</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(paper => `
+                <div class="paper-card">
+                    <div class="paper-header">
+                        <div class="paper-title"><i class="fas fa-notes-medical"></i> ${escapeHtml(paper.title)}</div>
+                        <div class="paper-year">📅 ${escapeHtml(paper.year)}</div>
+                    </div>
+                    ${paper.questions.map((q, idx) => {
+                        const status = progress[`${paper.id}_${idx}`] || 'none';
+                        return `
+                            <div class="question-card">
+                                <div class="question-text">${escapeHtml(q.text)}</div>
+                                <div class="answer-section">
+                                    <button class="reveal-btn" onclick="toggleAnswer(${paper.id}, ${idx})">
+                                        <i class="fas fa-lightbulb"></i> Show Answer
+                                    </button>
+                                    <div id="answer-${paper.id}-${idx}" class="answer-content">
+                                        ${escapeHtml(q.answer).replace(/\n/g, '<br>')}
+                                    </div>
+                                </div>
+                                <div class="progress-group">
+                                    <button class="progress-btn attempted" onclick="updateProgress(${paper.id}, ${idx}, 'attempted')">⚠️ Attempted</button>
+                                    <button class="progress-btn reviewed" onclick="updateProgress(${paper.id}, ${idx}, 'reviewed')">🔄 Reviewed</button>
+                                    <button class="progress-btn mastered" onclick="updateProgress(${paper.id}, ${idx}, 'mastered')">🏆 Mastered</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `).join('');
+        }
+        
+        function toggleAnswer(paperId, idx) {
+            document.getElementById(`answer-${paperId}-${idx}`).classList.toggle('show');
+        }
+        
+        function updateProgress(paperId, idx, status) {
+            progress[`${paperId}_${idx}`] = status;
+            localStorage.setItem('nursePrepProgress', JSON.stringify(progress));
+            renderPapers();
+            updateStats();
+            renderProgressList();
+        }
+        
+        function updateStats() {
+            let total = 0, attempted = 0, mastered = 0;
+            papersData.forEach(paper => {
+                paper.questions.forEach((_, idx) => {
+                    total++;
+                    const s = progress[`${paper.id}_${idx}`];
+                    if (s === 'attempted' || s === 'reviewed' || s === 'mastered') attempted++;
+                    if (s === 'mastered') mastered++;
+                });
+            });
+            document.getElementById('totalQuestions').textContent = total;
+            document.getElementById('attemptedCount').textContent = attempted;
+            document.getElementById('masteredCount').textContent = mastered;
+        }
+        
+        function renderProgressList() {
+            const container = document.getElementById('progressList');
+            const items = [];
+            papersData.forEach(paper => {
+                paper.questions.forEach((q, idx) => {
+                    const status = progress[`${paper.id}_${idx}`];
+                    if (status) {
+                        items.push(`
+                            <div class="paper-card">
+                                <div style="font-weight: 700;">${escapeHtml(paper.title)} (${paper.year})</div>
+                                <div style="font-size: 14px; margin: 10px 0;">${escapeHtml(q.text.substring(0, 80))}...</div>
+                                <span class="status-badge">${status === 'mastered' ? '✅ Mastered' : status === 'reviewed' ? '🔄 Reviewed' : '⚠️ Attempted'}</span>
+                            </div>
+                        `);
+                    }
+                });
+            });
+            container.innerHTML = items.length ? items.join('') : '<div class="paper-card">No progress yet. Start practicing!</div>';
+        }
+        
+        // SUBMIT NEW QUESTION - Adds to Google Sheet
+        async function submitQuestion() {
+            const title = document.getElementById('newTitle').value.trim();
+            const year = document.getElementById('newYear').value.trim();
+            const question = document.getElementById('newQuestion').value.trim();
+            const answer = document.getElementById('newAnswer').value.trim();
+            
+            if (!title || !question || !answer) {
+                alert('Please fill in Paper Title, Question, and Answer');
+                return;
+            }
+            
+            // Get next ID
+            let maxId = 0;
+            papersData.forEach(p => { if (p.id > maxId) maxId = p.id; });
+            const nextId = maxId + 1;
+            
+            // Open Google Sheets edit link for user to add
+            const editUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
+            
+            // Show instructions
+            const msg = document.getElementById('addSuccessMsg');
+            msg.style.display = 'block';
+            msg.innerHTML = `<i class="fas fa-info-circle"></i> Click "Open Google Sheets" below to add your question. Copy this format:<br><br>
+            <strong>${nextId} | ${title} | ${year} | ${question.substring(0, 50)}... | ${answer.substring(0, 50)}...</strong><br><br>
+            Add as a new row at the bottom.`;
+            
+            // Open Google Sheet
+            window.open(editUrl, '_blank');
+            
+            // Clear form
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newYear').value = '';
+            document.getElementById('newQuestion').value = '';
+            document.getElementById('newAnswer').value = '';
+            
+            // Auto-hide message after 5 seconds
+            setTimeout(() => {
+                msg.style.display = 'none';
+                msg.innerHTML = '<i class="fas fa-check-circle"></i> Question added! It will appear for all users in 1-2 minutes.';
+            }, 8000);
+        }
+        
+        // UI Functions
+        function setupTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(`${tab}Tab`).classList.add('active');
+                    if (tab === 'progress') renderProgressList();
+                    if (tab === 'practice') loadQuestions();
+                });
+            });
+        }
+        
+        function scrollToAddTab() {
+            document.querySelector('.tab-btn[data-tab="add"]').click();
+            document.getElementById('newTitle').focus();
+        }
+        
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            localStorage.setItem('darkMode', darkMode);
+            document.body.classList.toggle('dark', darkMode);
+            document.querySelector('.icon-btn i').className = darkMode ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({ title: 'NursePrep Pro', text: 'Add and share nursing past papers!', url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied!');
+            }
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m] || m));
+        }
+        
+        // Initialize
+        document.getElementById('searchInput')?.addEventListener('input', renderPapers);
+        setupTabs();
+        if (darkMode) document.body.classList.add('dark');
+        loadQuestions();
+        
+        // Make functions global
+        window.toggleAnswer = toggleAnswer;
+        window.updateProgress = updateProgress;
+        window.submitQuestion = submitQuestion;
+        window.toggleDarkMode = toggleDarkMode;
+        window.shareApp = shareApp;
+        window.scrollToAddTab = scrollToAddTab;
+    </script>
+</body>
+</html>
