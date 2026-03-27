@@ -3,30 +3,26 @@ name: Build APK
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Install PWABuilder
+        run: npm install -g @pwabuilder/cli
 
-    - name: Build debug APK
-      run: ./gradlew assembleDebug
+      - name: Generate APK
+        run: pwa build --app-url https://github.com/ritunda/npp/edit/ --platform android
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: ./*.apk
