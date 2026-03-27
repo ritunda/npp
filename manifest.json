@@ -1,13 +1,21 @@
 {
   "name": "NursePrep Pro",
   "short_name": "NursePrep",
-  "description": "Collaborative nursing past papers with answers and quizzes",
-  "start_url": "./nurseprep.html",
+  "description": "Collaborative nursing past papers with answers & quizzes",
+  "start_url": "/npp",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#0891b2",
   "icons": [
-    { "src": "https://via.placeholder.com/192x192/0891b2/ffffff?text=NP", "sizes": "192x192", "type": "image/png" },
-    { "src": "https://via.placeholder.com/512x512/0891b2/ffffff?text=NP", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "https://via.placeholder.com/192x192/0891b2/ffffff?text=NP",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/0891b2/ffffff?text=NP",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
