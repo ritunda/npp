@@ -19,7 +19,7 @@ jobs:
         run: npm install -g @pwabuilder/cli
 
       - name: Generate APK
-        run: pwa build --app-url https://github.com/ritunda/npp/edit/ --platform android
+        run: pwa build https://ritunda.github.io/npp/ --platform android
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
