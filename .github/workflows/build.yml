@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir -p www
           cp index.html www/
-          # If you have other static files, copy them as well
+          # If you have other static assets (CSS, JS, images), copy them as well
 
       - name: Install Capacitor
         run: |
@@ -35,6 +35,21 @@ jobs:
 
       - name: Copy web assets
         run: npx cap copy
+
+      - name: Fix Kotlin version conflict
+        run: |
+          # Append resolution strategy to app/build.gradle to force consistent Kotlin version
+          cat << EOF >> android/app/build.gradle
+
+          // Force consistent Kotlin version to avoid duplicate classes
+          configurations.all {
+              resolutionStrategy {
+                  force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0"
+              }
+          }
+          EOF
 
       - name: Setup Java 21
         uses: actions/setup-java@v4
