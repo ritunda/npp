@@ -3,6 +3,7 @@ name: Build APK
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:   # allows manual trigger
 
 jobs:
   build:
@@ -15,14 +16,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install PWABuilder
+      - name: Install PWABuilder CLI
         run: npm install -g @pwabuilder/cli
 
-      - name: Generate APK
-        run: pwa build https://ritunda.github.io/npp/ --platform android
+      - name: Build APK
+        run: npx @pwabuilder/cli build https://ritunda.github.io/npp/ --platform android
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app
-          path: ./*.apk
+          name: nurseprep-apk
+          path: ./android*
